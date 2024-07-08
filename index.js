@@ -1,4 +1,3 @@
-
 const puppeteer = require("puppeteer");
 
 (async () => {
@@ -69,5 +68,5 @@ const puppeteer = require("puppeteer");
 
   setTimeout(async () => {
     await browser.close();
-  }, 10000);
+  }, 1000);
 })();

@@ -6,6 +6,7 @@ public class Calculator implements ActionListener {
 
     JFrame frame;
     JTextField textField;
+    JTextField expressionField;
     JButton[] numberButtons = new JButton[10];
     JButton[] functionButtons = new JButton[8];
     JButton addButton, subButton, mulButton, divButton, decButton, equButton, delButton, clrButton;
@@ -15,13 +16,20 @@ public class Calculator implements ActionListener {
 
     double num1 = 0, num2 = 0, result = 0;
     char operator = ' ';
-
+    StringBuilder expression = new StringBuilder();
     Calculator() {
         frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.BLACK);
+        expressionField = new JTextField();
+        expressionField.setBounds(60, 10, 300, 30);
+        expressionField.setFont(myFont);
+        expressionField.setEditable(false);
+        expressionField.setBackground(Color.BLACK);
+        expressionField.setForeground(Color.WHITE);
+        frame.add(expressionField);
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
@@ -102,6 +110,8 @@ public class Calculator implements ActionListener {
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == numberButtons[i]) {
                 textField.setText(textField.getText().concat(String.valueOf(i)));
+                expression.append(i);
+                expressionField.setText(expression.toString());
             }
         }
         if (e.getSource() == decButton) {
@@ -135,6 +145,7 @@ public class Calculator implements ActionListener {
         }
         if (e.getSource() == clrButton) {
             textField.setText("");
+            expression.setLength(0);
             num1 = 0;
             num2 = 0;
             result = 0;
@@ -150,7 +161,7 @@ public class Calculator implements ActionListener {
     }
 
     private void calculate() {
-        if (!textField.getText().equals("")) {
+        if (!textField.getText().isEmpty()) {
             num2 = Double.parseDouble(textField.getText());
 
             switch (operator) {
@@ -172,7 +183,6 @@ public class Calculator implements ActionListener {
                     }
                     break;
                 case '=':
-                    result = num2;
                     break;
                 default:
                     result = num2;
